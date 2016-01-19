@@ -1,0 +1,26 @@
+/*
+*
+* 				TEMA #2 - PROTOCOALE DE COMUNICATIE 
+*					Simularea unui protocoal de rutare
+*					Realizata de : Lavinia Tache - 322CA
+*							2015
+*/
+	
+
+Tema presupune implementarea unui protocol de rutare capabil sa ruleze un algoritm de rutare SPF (shortest path first)  minimalist, sa se adapteze la schimbarile din retea in cadrul aceluiasi algoritm si sa ruteze o serie de mesaje date ca input. Schimbarile ce ar putea sa apara in retea sunt de doua tipuri : adaugare sau stergere a unui legaturi existente.
+In main se prezinte etapele cronologice ale simularii, iar in sim.cpp se implementeaza urmatoarele functii :
+	* init_sim() -> unde se realizeaza actiunile care tin de initializarea simulatorului. In aceasta functie se face si inundarea cu mesajele de floodare pentru ca fiecare ruter la final sa poate avea informatii despre toate ruterele din topologie. In momentul in care un ruter booteaza acesta contine informatii doar despre vecinii direct conectati.
+	Ruterul va trimite fiecaruia in parte un mesaj cu versiunea, vecinii sai si costul pentru a ajunge la ei. Este necesar sa se implementeze acest mecanism special cu versiunea ruterului pentru a evida circularea unui mesaj la infinit in cadrul retelei. Tot in cadrul functiei init_sim() se aloca si creeaza vectorii care contin evenimentele ce urmeaza sa se modifice in retea si mesajele rutabile.
+	* trigger_events() -> functie in care se proceseaza evenimentele care pot aparea in retea : adaugarea sau eliminarea unei legaturi.
+	Dupa fiecare dintre aceasta operatie se vor trimite din nou mesaje mesaje de floodare pentru ca intreaga retea sa afle de eveniment.
+	* process_messages() -> se proceseaza mesajele amintite si se continua floodarea cu mesaje pentru a completa topologia. Atfel, se verifica lista de mesaje care trebuie pornite in retea si va fi instantiat nodul aferent de la care porneste mesajul; se vor redistribui mesajele de protocol si cele rutabile.
+	* update_routing_table() -> fiecare ruter contine si o tabela de rutare. In tabela de rutare exista next-hop ul pentru a putea ajunge pe un drum cu cost minim la fiecare nod din graf. Pentru a determina drumul cu cost minim se foloseste algoritmul lui Dijkstra. Este un algoritm care calculeaza drumurile minime de la un nod al unui graf la toate celelalte noduri din graf si functioneaza atat de grafuri conexe, dar si pe grafuri neconexe.
+
+
+
+Referinte:
+	1. http://cs.curs.pub.ro/2014/mod/folder/view.php?id=4201 Nivelul Retea - implementare algoritm Dijkstra
+	2.http://web.info.uvt.ro/~smihalas/com_net/download/retele_de_calculatoare_editia_a4a.pdf
+	3. http://stackoverflow.com/questions/6810656/creating-an-array-of-structs-in-c
+	4.http://www.cplusplus.com/doc/tutorial/
+
